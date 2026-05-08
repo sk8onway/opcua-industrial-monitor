@@ -32,8 +32,8 @@ class MainWindow(QMainWindow):
         header.setSectionResizeMode(2, QHeaderView.ResizeToContents)
 
         for row in range(50):
-            variable_id = str(row + 2)
-            self.table.setItem(row, 0, QTableWidgetItem(variable_id))
+            variable_name = f"Variable_{row + 1}"
+            self.table.setItem(row, 0, QTableWidgetItem(variable_name))
             self.table.setItem(row, 1, QTableWidgetItem("0"))
             self.table.setItem(row, 2, QTableWidgetItem("-"))
 
@@ -58,10 +58,10 @@ class MainWindow(QMainWindow):
         telemetry_available = False
 
         for row in range(50):
-            variable_id = str(row + 2)
+            variable_name = f"Variable_{row + 1}"
             cursor.execute(
                 "SELECT value, timestamp FROM telemetry WHERE variable_id = ? ORDER BY id DESC LIMIT 1",
-                (variable_id,),
+                (variable_name,),
             )
             result = cursor.fetchone()
 

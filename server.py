@@ -35,7 +35,7 @@ async def create_variables(parent_object, namespace_idx):
         var_name = f"Variable_{i}"
         initial_value = i
         variable = await create_variable(parent_object, namespace_idx, var_name, initial_value)
-        print(variable.nodeid)
+        #print(variable.nodeid)
         variables.append(variable)
     return variables
 
@@ -64,7 +64,7 @@ async def main():
                 value = await variable.read_value()
                 value += 1
                 await variable.write_value(value)
-                print(f"{variable.nodeid.Identifier}: {value}")
+                #print(f"{variable.nodeid.Identifier}: {value}")
 
             await asyncio.sleep(1)
 

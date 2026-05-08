@@ -14,21 +14,23 @@ async def create_node_references(client):
     return nodes
 
 async def read_and_display_values(nodes):
-    """Read and print current values for all provided OPC-UA nodes."""
+    """Read current values from all provided OPC-UA nodes and store in database."""
+    node_index = 1
     while True:
         for node in nodes:
             try:
                 value = await node.read_value()
-                identifier = node.nodeid.Identifier
+                variable_name = f"Variable_{node_index}"
                 timestamp = datetime.now().isoformat()
-                insert_value(timestamp, identifier, value)
-                print(f"{identifier}: {value}")
+                insert_value(timestamp, variable_name, value)
             except Exception as e:
-                identifier = node.nodeid.Identifier
+                variable_name = f"Variable_{node_index}"
                 message = str(e)
-                print(f"Error reading {identifier}: {message}")
+                print(f"Error reading {variable_name}: {message}")
                 if "Connection is closed" in message:
                     raise
+            node_index += 1
+        node_index = 1
         await asyncio.sleep(1)
 
 async def main():
